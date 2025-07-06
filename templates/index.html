@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">게시판</h2>
+    {% if session.username %}
+    <a href="{{ url_for('write') }}" class="btn btn-primary">글쓰기</a>
+    {% endif %}
+</div>
+
+<div class="mb-4">
+    <form method="GET" action="{{ url_for('index') }}" class="row g-2 justify-content-center">
+        <div class="col-auto">
+            <select name="type" class="form-select">
+                <option value="title_content" {% if search_type == 'title_content' %}selected{% endif %}>제목+내용</option>
+                <option value="title" {% if search_type == 'title' %}selected{% endif %}>제목</option>
+                <option value="content" {% if search_type == 'content' %}selected{% endif %}>내용</option>
+                <option value="username" {% if search_type == 'username' %}selected{% endif %}>작성자</option>
+            </select>
+        </div>
+        <div class="col-md-5">
+            <input type="text" name="q" class="form-control" placeholder="검색어를 입력하세요..." value="{{ search_query }}">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-outline-primary">검색</button>
+        </div>
+    </form>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover text-center">
+        <thead class="table-light">
+            <tr>
+                <th scope="col" style="width: 10%;">번호</th>
+                <th scope="col" style="width: 50%;">제목</th>
+                <th scope="col" style="width: 15%;">작성자</th>
+                <th scope="col" style="width: 15%;">작성일</th>
+                <th scope="col" style="width: 10%;">조회수</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+            <tr>
+                <td>{{ post.id }}</td>
+                <td class="text-start">
+                    <a href="{{ url_for('view', post_id=post.id) }}" class="text-decoration-none">
+                        
+                        {% if post.is_secret and session.user_id != post.user_id %}
+                            비밀글입니다 <i class="fa-solid fa-lock fa-sm text-secondary"></i>
+                        
+                        {% else %}
+                            {{ post.title }}
+                            {% if post.is_secret %}
+                                <i class="fa-solid fa-lock fa-sm text-secondary"></i>
+                            {% endif %}
+                        {% endif %}
+
+                    </a>
+                </td>
+                <td>{{ post.username }}</td>
+                <td>{{ post.created_at.strftime('%Y-%m-%d') }}</td>
+                <td>{{ post.views }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">
+                    {% if search_query %}
+                        '{{ search_query }}'에 대한 검색 결과가 없습니다.
+                    {% else %}
+                        게시글이 없습니다.
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

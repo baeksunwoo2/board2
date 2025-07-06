@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="text-center mb-4">{{ user.real_name }}님의 프로필</h2>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <img src="{{ url_for('get_user_avatar', user_id=user.id) }}" class="img-fluid rounded-circle mb-3" alt="프로필 사진" style="width: 150px; height: 150px; object-fit: cover;">
+                    </div>
+                    <div class="col-md-8">
+                        <h3>{{ user.real_name }} <small class="text-muted">({{ user.username }})</small></h3>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>학교:</strong> {{ user.school or '정보 없음' }}</li>
+                            <li class="list-group-item"><strong>나이:</strong> {{ user.age or '정보 없음' }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-3">
+            <a href="javascript:history.back()" class="btn btn-secondary">뒤로가기</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

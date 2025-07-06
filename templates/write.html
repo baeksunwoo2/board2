@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>글쓰기</h2>
+<form method="POST" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="title" class="form-label">제목</label>
+        <input type="text" class="form-control" id="title" name="title" required>
+    </div>
+    <div class="mb-3">
+        <label for="content" class="form-label">내용</label>
+        <textarea class="form-control" id="content" name="content" rows="10" required></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="file" class="form-label">파일 첨부</label>
+        <input class="form-control" type="file" id="file" name="file">
+    </div>
+    <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="is_secret" name="is_secret" value="1">
+        <label class="form-check-label" for="is_secret">비밀글로 설정</label>
+    </div>
+    <button type="submit" class="btn btn-primary">작성 완료</button>
+    <a href="{{ url_for('index') }}" class="btn btn-secondary">취소</a>
+</form>
+{% endblock %}

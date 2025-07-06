@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2 class="text-center mb-4">로그인</h2>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="username" class="form-label">사용자 이름</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">비밀번호</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">로그인</button>
+            </div>
+        </form>
+        <div class="text-center mt-3">
+            <a href="{{ url_for('find_id') }}" class="text-decoration-none">아이디 찾기</a>
+            <span class="text-muted mx-2">|</span>
+            <a href="{{ url_for('find_password') }}" class="text-decoration-none">비밀번호 찾기</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
